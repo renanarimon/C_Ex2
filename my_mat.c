@@ -1,79 +1,63 @@
 #include <stdio.h>
 #include "my_mat.h"
 
-static int mat[10][10];
+#define SIZE 10
+#define INFINITY 100000000
 
-#define min(a, b)                   \
-    (                               \
-        {                           \
-            __typeof__(a) _a = (a); \
-            __typeof__(b) _b = (b); \
-            _a <= _b ? _a : _b;     \
-        })
-
-int new_mat(int input[100])
-{
-    int k = 0;
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; i++)
-        {
-            mat[i][j] = input[k];
-        }
-    }
-    return 0;
+int min(int a, int b){
+return (a < b ? a : b);
 }
 
-int isPath(int i, int j)
+void CreateMat(int arr[][SIZE])
 {
-    if (mat[i][j] != 0)
-    {
+
+	for (int i = 0;  i < SIZE; i++)
+	{
+		for (int j = 0; j < SIZE; j++)
+		{
+			(scanf("%d", &arr[i][j]));
+            if(i!=j && arr[i][j]==0){
+                arr[i][j]=INFINITY;
+            }
+            
+		}
+	}
+	FWAlgo(arr);
+}
+
+void FWAlgo(int arr[][SIZE]){
+    for(int k=0; k<SIZE; k++){
+        for(int i=0; i<SIZE; i++){
+            for(int j=0; j< SIZE; j++){
+                int a= arr[i][j];
+                int b= arr[i][k]+arr[k][j];
+                arr[i][j] = min(a,b);
+            }
+        }
+    }
+}
+
+void isPath(int arr[][SIZE]){
+    int i;
+    int j;
+    scanf(" %d%d",&i,&j);
+    if(arr[i][j]!=0 && arr[i][j]<INFINITY){
         printf("True\n");
-        return 0;
+    } else{
+        printf("False\n");
     }
-    else
-    {
-        for (int k = 1; i <= 10; k++)
-        {
-            for (int m = 1; m <= 10; m++)
-            {
-                for (int n = 1; n <= 10; n++)
-                {
-                    if ((mat[m][k] + mat[k][n]) != 0)
-                    {
-                        printf("True\n");
-                        return 0;
-                    }
-                }
-            }
-        }
-    }
-    printf("False\n");
-    return 0;
 }
 
-int findShortPath(int i, int j)
-{
-    if (isPath(i, j)==0)
-    {
-        printf("%d\n", -1);
-        return 0;
+void shortPath(int arr[SIZE][SIZE]){
+    int i=0;
+    int j=0;
+    scanf(" %d%d",&i, &j);
+    if(arr[i][j]!=0 && arr[i][j]<INFINITY){
+        printf("%d\n", arr[i][j]);
+    } else{
+        printf("%d\n",-1);
     }
-    int (*pmat)[10][10];
-    pmat = &mat;
-
-    for (int k = 1; i <= 10; k++)
-    {
-        for (int m = 1; m <= 10; m++)
-        {
-            for (int n = 1; n <= 10; n++)
-            {
-                int a = *pmat[m][n];
-                int b = *pmat[m][k] + *pmat[k][n];
-                *pmat[m][n] = min(a, b);
-            }
-        }
-    }
-    printf("%d\n", *pmat[i][j]);
-    return 0;
 }
+
+
+

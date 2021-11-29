@@ -1,10 +1,18 @@
 #ifndef MYMAT_H
 #define MYMAT_H
 
-int new_mat(int[]);
+#include<stdio.h>
 
-int isPath(int, int);
+#define SIZE 10
 
-int findShortPath(int, int);
+int min(int a, int b);
+
+void CreateMat(int arr[][SIZE]);
+
+void isPath(int[][SIZE]);
+
+void FWAlgo(int arr[][SIZE]);
+
+void shortPath(int arr[SIZE][SIZE]);
 
 #endif
